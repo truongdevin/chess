@@ -26,9 +26,9 @@ class Display
     if [i, j] == @cursor_pos
       bg = :light_red
     elsif (i + j).odd?
-      bg = :light_blue
+      bg = :light_white
     else
-      bg = :blue
+      bg = :default
     end
     { background: bg, color: :white }
   end

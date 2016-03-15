@@ -1,5 +1,4 @@
 
-
 class Rook < Piece
   include SlidingPiece
 
@@ -8,7 +7,7 @@ class Rook < Piece
   end
 
   def to_s
-    " ♖ "
+    color == :white ? " \u2656 " : " \u265C "
   end
 
 end

@@ -15,6 +15,9 @@ class Game
     end_pos = nil
     until false #until checkmate?
       start_pos = @player.move
+      p @board[start_pos].moves
+      p @board[start_pos].color
+      sleep(2)
       end_pos = @player.move
       @board.move(start_pos,end_pos)
     end

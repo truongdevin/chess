@@ -1,20 +1,26 @@
-module SlidingPiece
+module SteppingPiece
 
-  CARDINAL_DIRECTIONS = [
+  KING_DIR = [
     [-1, 0],
     [1,0],
     [0,1],
-    [0,-1]
-  ]
-
-  NONCARDINAL_DIRECTIONS = [
+    [0,-1],
     [1,1],
     [1,-1],
     [-1,1],
     [-1,-1]
   ]
 
-
+  KNIGHT_DIR = [
+    [1,2],
+    [2,1],
+    [2,-1],
+    [1,-2],
+    [-1,-2],
+    [-2,-1],
+    [-2,1],
+    [-1,2]
+  ]
 
   def moves
     moves = []
@@ -40,6 +46,8 @@ module SlidingPiece
         moves << new_pos unless board[new_pos].color == color       # TODO
         break
       end
+      break if move_dirs == KING_DIR || move_dirs == KNIGHT_DIR
+
     end
 
     moves

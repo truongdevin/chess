@@ -4,4 +4,10 @@ class NullPiece
     "   "
   end
 
+  def pos
+  end
+
+  def color
+  end
+
 end
