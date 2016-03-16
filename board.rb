@@ -1,6 +1,7 @@
 require_relative "SlidingPiece"
 require_relative "SteppingPiece"
 require_relative "piece"
+require_relative "pawn"
 require_relative "rook"
 require_relative "bishop"
 require_relative "queen"
@@ -54,6 +55,10 @@ class Board
       self[[7,col]].color = :white
       self[[7,col]].pos = [7,col]
     end
+
+    (0..7).each do |col|
+      self[[1,col]] = Pawn.new(self, [1,col], :black)
+    end
   end
 
 
@@ -90,5 +95,29 @@ class Board
   def valid_pos?(pos)
     pos[0].between?(0,7) && pos[1].between?(0,7) ? true : false
   end
+
+  def adjacents(pos)
+    moves = []
+    x,y = pos
+    
+
+    if self[pos].color == :black
+      take_right = [x+1, y+1]
+      take_left = [x+1, y-1]
+    else
+      take_right = [x-1, y-1]
+      take_left = [x-1, y+1]
+    end
+
+    if self[take_right].color != self[pos].color && self[take_right].is_a?(Piece)
+      moves << take_right if valid_pos?(take_right)
+    end
+
+    if self[take_left].color != self[pos].color && self[take_left].is_a?(Piece)
+      moves << take_left if valid_pos?(take_left)
+    end
+    moves
+  end
+
 
 end

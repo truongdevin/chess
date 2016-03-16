@@ -16,8 +16,11 @@ class Game
     until false #until checkmate?
       start_pos = @player.move
       p @board[start_pos].moves
-      p @board[start_pos].color
-      sleep(2)
+      # p @board[start_pos].color
+      # p @board[start_pos].pos
+      # p @board.adjacents(start_pos)
+      # byebug
+      sleep(3)
       end_pos = @player.move
       @board.move(start_pos,end_pos)
     end
