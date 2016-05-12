@@ -1,14 +1,15 @@
-require_relative "SlidingPiece"
-require_relative "SteppingPiece"
-require_relative "piece"
-require_relative "pawn"
-require_relative "rook"
-require_relative "bishop"
-require_relative "queen"
-require_relative "king"
-require_relative "knight"
+# require_relative "SlidingPiece"
+# require_relative "SteppingPiece"
+# require_relative "piece"
+# require_relative "pawn"
+# require_relative "rook"
+# require_relative "bishop"
+# require_relative "queen"
+# require_relative "king"
+# require_relative "knight"
+require_relative 'pieces'
 require_relative "display"
-require_relative "nullpiece"
+# require_relative "nullpiece"
 
 class Board
   attr_reader :grid

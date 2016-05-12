@@ -1,3 +1,6 @@
+require_relative 'piece'
+require_relative 'SteppingPiece'
+
 class King < Piece
   include SteppingPiece
 

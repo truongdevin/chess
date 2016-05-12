@@ -1,3 +1,5 @@
+require_relative 'piece'
+require_relative 'SlidingPiece'
 
 class Rook < Piece
   include SlidingPiece
