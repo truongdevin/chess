@@ -1,6 +1,10 @@
 class Pawn < Piece
   # include SteppingPiece
 
+  def to_s
+    color == :white ? " \u2659 " : " \u265F "
+  end
+  
   def get_increment
     moves =[]
     if pos[0] == 1 && color == :black
@@ -18,9 +22,6 @@ class Pawn < Piece
     moves
   end
 
-  def to_s
-    color == :white ? " \u2659 " : " \u265F "
-  end
 
   def moves
     moves = []

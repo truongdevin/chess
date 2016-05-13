@@ -1,15 +1,6 @@
-# require_relative "SlidingPiece"
-# require_relative "SteppingPiece"
-# require_relative "piece"
-# require_relative "pawn"
-# require_relative "rook"
-# require_relative "bishop"
-# require_relative "queen"
-# require_relative "king"
-# require_relative "knight"
 require_relative 'pieces'
 require_relative "display"
-# require_relative "nullpiece"
+
 
 class Board
   attr_reader :grid
@@ -62,19 +53,9 @@ class Board
     end
   end
 
-
   def rows
     @grid
   end
-
-  # def populate_board
-  #   (0..7).each do |row|
-  #     (0..7).each do |col|
-  #       self[[row,col]] = Knight.new(self, [row,col], :white) unless row.between?(2,5)
-  #     end
-  #   end
-  # end
-
 
   def move(start, end_pos)
     if !empty?(start)
