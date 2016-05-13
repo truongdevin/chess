@@ -4,8 +4,15 @@ require_relative 'SteppingPiece'
 class Knight < Piece
   include SteppingPiece
 
-  def move_dirs
-    SteppingPiece::KNIGHT_DIR
+  def move_diffs
+    [[-2, -1],
+     [-1, -2],
+     [-2, 1],
+     [-1, 2],
+     [1, -2],
+     [2, -1],
+     [1, 2],
+     [2, 1]]
   end
 
   def to_s

@@ -1,12 +1,3 @@
-
-# # require_relative "SlidingPiece"
-# require_relative "rook"
-# require_relative "bishop"
-# # require_relative "queen"
-# require_relative "nullpiece"
-
-
-
 class Piece
   attr_accessor :pos, :color
   attr_reader :board
@@ -16,8 +7,4 @@ class Piece
     @color = color
     @pos = pos
   end
-
-
-
-
 end
