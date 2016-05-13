@@ -1,8 +1,8 @@
 require_relative "display"
 
 class Player
-  def initialize(board)
-    @display = Display.new(board)
+  def initialize(display)
+    @display = display
   end
 
   def move

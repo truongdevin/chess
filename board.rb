@@ -1,6 +1,4 @@
 require_relative 'pieces'
-require_relative "display"
-
 
 class Board
   attr_reader :grid
@@ -20,36 +18,25 @@ class Board
     @grid[row][col]
   end
 
-  # def show_board
-  #   (0..7).each do |row|
-  #     (0..7).each do |col|
-  #       puts self[row,col]
-  #     end
-  #     print "\n"
-  #   end
-  # end
-
-
-
   def populate_board
     special_pieces = [Rook.new(self), Knight.new(self),
       Bishop.new(self), Queen.new(self), King.new(self),
       Bishop.new(self), Knight.new(self), Rook.new(self) ]
 
     (0..7).each do |col|
+      #set up black and white pawns
+      self[[1,col]] = Pawn.new(self, [1,col], :black)
+      self[[6,col]] = Pawn.new(self, [6,col], :white)
+
+      # set up black special pieces
       self[[0,col]] = special_pieces[col]
       self[[0,col]].color = :black
       self[[0,col]].pos = [0,col]
-    end
 
-    (0..7).each do |col|
+      # set up white special pieces
       self[[7,col]] = special_pieces[col].dup
       self[[7,col]].color = :white
       self[[7,col]].pos = [7,col]
-    end
-
-    (0..7).each do |col|
-      self[[1,col]] = Pawn.new(self, [1,col], :black)
     end
   end
 
