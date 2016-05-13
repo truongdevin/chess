@@ -4,6 +4,12 @@ require_relative 'SteppingPiece'
 class King < Piece
   include SteppingPiece
 
+  def to_s
+    color == :white ? " \u2654 " : " \u265A "
+  end
+
+  private
+
   def move_diffs
     [[-1, -1],
      [-1, 0],
@@ -14,9 +20,4 @@ class King < Piece
      [1, 0],
      [1, 1]]
   end
-
-  def to_s
-    color == :white ? " \u2654 " : " \u265A "
-  end
-
 end

@@ -1,57 +1,41 @@
 class Pawn < Piece
-  # include SteppingPiece
 
   def to_s
     color == :white ? " \u2659 " : " \u265F "
   end
-  
-  def get_increment
-    moves =[]
-    if pos[0] == 1 && color == :black
-      moves = [[2,0],[1,0]] + board.adjacents(pos)
-    else
-      moves = [[1,0]] + board.adjacents(pos)
-    end
-
-    if pos[0] == 6 && color == :white
-      moves = [[-2,0],[-1,0]] + board.adjacents(pos)
-    else
-      moves = [[-1,0]] + board.adjacents(pos)
-    end
-    byebug
-    moves
-  end
-
 
   def moves
-    moves = []
-
-    get_increment.each do |dx,dy|
-      moves.concat(grow_unblocked_moves_in_dir(dx, dy))
-    end
-
-    moves
+    forward_moves + diagonal_moves
   end
 
-  def grow_unblocked_moves_in_dir(dx,dy)
-    cur_x, cur_y = pos
-    moves = []
-    loop do
-      cur_x, cur_y = cur_x + dx, cur_y + dy
-      new_pos = [cur_x,cur_y]
-      break unless board.valid_pos?(new_pos)
+  private
 
-      if board.empty?(new_pos)
-        moves << new_pos
-      else
-        moves << new_pos unless board[new_pos].color == color       # TODO
-        break
-      end
-      break
+  def forward_dir
+    color == :white ? -1 : 1
+  end
 
+  def start_row?
+    pos[0] == (color == :white ? 6 : 1)
+  end
+
+  def forward_moves
+    row, col = pos
+    forward_one = [row + forward_dir, col]
+    return [] unless board.valid_pos?(forward_one) && board.empty?(forward_one)
+    possible_moves = [forward_one]
+
+    forward_two = [row + 2* forward_dir, col]
+    possible_moves << forward_two if start_row? && board.empty?(forward_two)
+    possible_moves
+  end
+
+  def diagonal_moves
+    row, col = pos
+    diag_moves = [[row + forward_dir, col + 1], [row + forward_dir, col - 1]]
+
+    diag_moves.select do |move|
+      (board.valid_pos?(move) && !board.empty?(move) && board[move] != color)
     end
-
-    moves
   end
 
 end
