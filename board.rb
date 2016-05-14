@@ -62,7 +62,7 @@ def move_piece(turn_color, from_pos, to_pos)
   end
 ##########################################################
 
-  def move(start, end_pos)
+  def move(color, start, end_pos)
     if !empty?(start)
       if self[start].moves.include?(end_pos) && self[start].valid_moves.include?(end_pos)
         self[end_pos] = self[start]
@@ -108,6 +108,14 @@ def move_piece(turn_color, from_pos, to_pos)
     king_pos = find_king(color).pos
     pieces.any? do |piece|
       piece.color != color && piece.moves.include?(king_pos)
+    end
+  end
+
+  def checkmate?(color)
+    return false unless in_check?(color)
+
+    pieces.select { |p| p.color == color }.all? do |piece|
+      piece.valid_moves.empty?
     end
   end
 
