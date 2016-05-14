@@ -7,4 +7,18 @@ class Piece
     @color = color
     @pos = pos
   end
+
+  def valid_moves
+    moves.reject { |end_pos| move_into_check?(end_pos) }
+  end
+
+  private
+
+  def move_into_check?(end_pos)
+    test_board = board.dup
+
+    #TODO this is the line that breaks it!
+    test_board.move!(@pos, end_pos)
+    test_board.in_check?(color)
+  end
 end

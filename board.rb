@@ -3,9 +3,9 @@ require_relative 'pieces'
 class Board
   attr_reader :grid
 
-  def initialize
-    @grid = Array.new(8) {Array.new(8) {NullPiece.new}} #TODO Refactor
-    populate_board
+  def initialize(fill_board = true)
+    @grid = Array.new(8) {Array.new(8) {NullPiece.new}}
+    populate_board if fill_board
   end
 
   def []=(pos, target)
@@ -44,9 +44,27 @@ class Board
     @grid
   end
 
+
+########################################################
+def move_piece(turn_color, from_pos, to_pos)
+    raise 'from position is empty' if empty?(from_pos)
+
+    piece = self[from_pos]
+    if piece.color != turn_color
+      raise 'You must move your own piece'
+    elsif !piece.moves.include?(to_pos)
+      raise 'Piece does not move like that'
+    elsif !piece.valid_moves.include?(to_pos)
+      raise 'You cannot move into check'
+    end
+
+    move_piece!(from_pos, to_pos)
+  end
+##########################################################
+
   def move(start, end_pos)
     if !empty?(start)
-      if self[start].moves.include?(end_pos)
+      if self[start].moves.include?(end_pos) && self[start].valid_moves.include?(end_pos)
         self[end_pos] = self[start]
         self[end_pos].pos = end_pos
         self[start] = NullPiece.new
@@ -57,12 +75,49 @@ class Board
     end
   end
 
+  # moves a piece without checking for check 
+  def move!(start, end_pos)
+    if self[start].moves.include?(end_pos)
+      self[end_pos] = self[start]
+      self[end_pos].pos = end_pos
+      self[start] = NullPiece.new
+    else
+      puts "Invalid Move!  Try again."
+      sleep(2)
+    end
+  end
+
+  def dup
+    new_board = Board.new(false)
+
+    pieces.each do |piece|
+      new_board[piece.pos] = piece.class.new(new_board, piece.pos, piece.color )
+    end
+    new_board
+  end
+
   def empty?(pos)   #end_pos is an array returns false if there's a piece in the position
     self[pos].is_a?(Piece) ? false : true
   end
 
   def valid_pos?(pos)
     pos[0].between?(0,7) && pos[1].between?(0,7) ? true : false
+  end
+
+  def in_check?(color)
+    king_pos = find_king(color).pos
+    pieces.any? do |piece|
+      piece.color != color && piece.moves.include?(king_pos)
+    end
+  end
+
+  def find_king(color)
+    king = pieces.find { |piece| piece.color == color && piece.is_a?(King) }
+    king
+  end
+
+  def pieces
+    rows.flatten.select { |piece| piece.is_a?(Piece) }
   end
 
   def adjacents(pos)

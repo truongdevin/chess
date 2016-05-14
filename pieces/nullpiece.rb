@@ -10,4 +10,8 @@ class NullPiece
   def color
   end
 
+  def moves
+    []
+  end
+
 end
