@@ -5,7 +5,7 @@ class King < Piece
   include SteppingPiece
 
   def to_s
-    color == :white ? " \u2654 " : " \u265A "
+    color == :black ? " \u2654 " : " \u265A "
   end
 
   private

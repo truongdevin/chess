@@ -14,8 +14,6 @@ module SlidingPiece
     [-1,-1]
   ]
 
-
-
   def moves
     moves = []
 
@@ -41,7 +39,6 @@ module SlidingPiece
         break
       end
     end
-
     moves
   end
 

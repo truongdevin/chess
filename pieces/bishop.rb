@@ -5,7 +5,7 @@ class Bishop < Piece
   include SlidingPiece
 
   def to_s
-    color == :white ? " \u2657 " : " \u265D "
+    color == :black ? " \u2657 " : " \u265D "
   end
 
   private

@@ -16,8 +16,6 @@ class Piece
 
   def move_into_check?(end_pos)
     test_board = board.dup
-
-    #TODO this is the line that breaks it!
     test_board.move!(@pos, end_pos)
     test_board.in_check?(color)
   end

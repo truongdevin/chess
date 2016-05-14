@@ -5,7 +5,7 @@ class Queen < Piece
   include SlidingPiece
 
   def to_s
-    color == :white ? " \u2655 " : " \u265B "
+    color == :black ? " \u2655 " : " \u265B "
   end
 
   private

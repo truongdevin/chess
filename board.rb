@@ -44,34 +44,19 @@ class Board
     @grid
   end
 
-
-########################################################
-def move_piece(turn_color, from_pos, to_pos)
-    raise 'from position is empty' if empty?(from_pos)
-
-    piece = self[from_pos]
-    if piece.color != turn_color
-      raise 'You must move your own piece'
-    elsif !piece.moves.include?(to_pos)
-      raise 'Piece does not move like that'
-    elsif !piece.valid_moves.include?(to_pos)
-      raise 'You cannot move into check'
-    end
-
-    move_piece!(from_pos, to_pos)
-  end
-##########################################################
-
   def move(color, start, end_pos)
-    if !empty?(start)
-      if self[start].moves.include?(end_pos) && self[start].valid_moves.include?(end_pos)
-        self[end_pos] = self[start]
-        self[end_pos].pos = end_pos
-        self[start] = NullPiece.new
-      else
-        puts "Invalid Move!  Try again."
-        sleep(2)
-      end
+    if empty?(start)
+      raise "Selected an empty start position"
+    elsif self[start].color != color
+      raise "Please select your own pieces"
+    elsif !self[start].moves.include?(end_pos)
+      raise "You can't move there. Try again."
+    elsif !self[start].valid_moves.include?(end_pos)
+      raise "You can't move into check"
+    else
+      self[end_pos] = self[start]
+      self[end_pos].pos = end_pos
+      self[start] = NullPiece.new
     end
   end
 
@@ -96,7 +81,7 @@ def move_piece(turn_color, from_pos, to_pos)
     new_board
   end
 
-  def empty?(pos)   #end_pos is an array returns false if there's a piece in the position
+  def empty?(pos) 
     self[pos].is_a?(Piece) ? false : true
   end
 

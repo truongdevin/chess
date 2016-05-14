@@ -4,9 +4,12 @@ require_relative "cursorable"
 class Display
   include Cursorable
 
+  attr_accessor :notifications
+
   def initialize(board)
     @board = board
     @cursor_pos = [0, 0]
+    @notifications = {}
   end
 
   def build_grid
@@ -26,17 +29,24 @@ class Display
     if [i, j] == @cursor_pos
       bg = :light_red
     elsif (i + j).odd?
-      bg = :light_white
+      bg = :blue
     else
-      bg = :default
+      bg = :black
     end
     { background: bg, color: :white }
   end
 
+  def reset!
+    @notifications = {}
+  end
+
   def render
     system("clear")
-    puts "Fill the grid!"
     puts "Arrow keys, WASD, or vim to move, space or enter to confirm."
     build_grid.each { |row| puts row.join }
+
+    @notifications.each do |key, val|
+      puts "#{val}"
+    end
   end
 end

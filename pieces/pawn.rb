@@ -1,7 +1,7 @@
 class Pawn < Piece
 
   def to_s
-    color == :white ? " \u2659 " : " \u265F "
+    color == :black ? " \u2659 " : " \u265F "
   end
 
   def moves

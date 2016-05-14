@@ -6,7 +6,6 @@ class Game
   def initialize
     @board = Board.new
     @display = Display.new(@board)
-    # @player = Player.new(@display)
     @players = {
       white: Player.new(:white, @display),
       black: Player.new(:black, @display)
@@ -17,33 +16,34 @@ class Game
   def run
     start_pos = nil
     end_pos = nil
-    # until false #until checkmate?
     until @board.checkmate?(@current_player)
-      # debugger
-      start_pos = @players[@current_player].move
-      end_pos = @players[@current_player].move
-      @board.move(@current_player,start_pos,end_pos)
+      @display.notifications[:current_player] = "#{@current_player}'s Turn"
 
-      swap_turn!
+      if @board.in_check?(@current_player)
+        @display.notifications[:check] = "You're in check!"
+      end
+
+      begin
+        start_pos = @players[@current_player].move
+        end_pos = @players[@current_player].move
+        @board.move(@current_player,start_pos,end_pos)
+
+        swap_turn!
+      rescue StandardError => e
+        @display.notifications[:error] = e.message
+        retry
+      end
     end
-    # until @board.checkmate?(@current_player)
-    #   begin
-    #     start_pos = @players[@current_player].move
-    #     end_pos = @players[@current_player].move
-    #     board.move(start_pos, end_pos)
 
-    #     swap_turn!
-    #     # notify_players
-    #   rescue StandardError => e
-    #     # @display.notifications[:error] = e.message
-    #     retry
-    #   end
-    # end
-
+    @display.notifications[:game_over] = "#{@current_player} is checkmated."
+    @display.render
   end
+
+  private
 
   def swap_turn!
     @current_player = (@current_player == :white) ? :black : :white
+    @display.reset!
   end
 end
 
